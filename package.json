@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "api to make special requires relative to a module",
   "author": "Lorenzo García Rivera",
-  "license": "MIT",
+  "license": "BSD-2-Clause",
   "main": "index.js",
   "files": [ "index.js" ],
   "repository": {
