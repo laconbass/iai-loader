@@ -1,0 +1,23 @@
+{
+  "name": "iai-loader",
+  "version": "1.0.0",
+  "description": "api to make special requires relative to a module",
+  "author": "Lorenzo García Rivera",
+  "license": "MIT",
+  "main": "index.js",
+  "files": [ "index.js" ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/laconbass/iai-loader.git"
+  },
+  "bugs": {
+    "url": "https://github.com/laconbass/iai-loader/issues"
+  },
+  "devDependencies": {
+    "mocha": "~1.13.0",
+    "chai": "~1.8.1"
+  },
+  "scripts": {
+    "test": "node node_modules/.bin/mocha test/tests.js"
+  }
+}
