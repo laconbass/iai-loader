@@ -5,7 +5,7 @@
   "author": "Lorenzo García Rivera",
   "license": "BSD-2-Clause",
   "main": "index.js",
-  "files": [ "index.js" ],
+  "files": [ "index.js", "LICENSE" ],
   "repository": {
     "type": "git",
     "url": "https://github.com/laconbass/iai-loader.git"
