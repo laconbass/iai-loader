@@ -30,12 +30,12 @@ module.exports = function loader( module ) {
     } catch(err){
       parseError( err );
     }
-    try {
+   // try {
       return require( resolve( dirname(module.filename) , path ) );
-    } catch(err) {
+    /*} catch(err) {
       parseError( err );
       throw err;
-    }
+    }*/
   };
 }
 
