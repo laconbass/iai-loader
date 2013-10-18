@@ -1,7 +1,8 @@
 var f = require( 'util' ).format
-  , path = require( 'path' )
-  , resolve = path.resolve
-  , dirname = path.dirname
+  , npath = require( 'path' )
+  , resolve = npath.resolve
+  , dirname = npath.dirname
+  , basename = npath.basename
 ;
 
 /**
@@ -23,27 +24,34 @@ module.exports = function loader( module ) {
   }
   return function load( path ) {
     if( !path ){
-      throw Error( f( "Cannot load '%s'", path ) )
+      throw Error( "Cannot load '"+path+"'" )
     }
     try {
       return module.require( path );
     } catch(err){
       parseError( err );
     }
-   // try {
-      return require( resolve( dirname(module.filename) , path ) );
-    /*} catch(err) {
+    try {
+      return require( resolve( dirname(module.filename), path ) );
+    } catch(err) {
       parseError( err );
-      throw err;
-    }*/
-  };
+    }
+    if( !~path.indexOf( "/" ) ){
+      try {
+        return require( "iai-"+path )
+      } catch(err) {
+        parseError( err );
+      }
+    }
+    throw Error( "Cannot load '"+ path +"' because cannot find module" );
+  }
 }
 
-var notFound = /cannot find module/i
+var notFound = /cannot find module/i;
 
 function parseError( err ){
   if( !notFound.test( err.message ) ){
-    throw err;
-    //throw Error( f( "Cannot load '%s' because %s", path, err.message ) );
+    //throw err;
+    throw Error( "Error while loading: "+err.message );
   }
 }
