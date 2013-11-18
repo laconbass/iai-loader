@@ -26,32 +26,32 @@ module.exports = function loader( module ) {
     if( !path ){
       throw Error( "Cannot load '"+path+"'" )
     }
-    try {
-      return module.require( path );
-    } catch(err){
-      parseError( err );
+    // try requiring...
+    var result;
+    if( !~path.indexOf("/") ) {
+      result = tryRequire( path );
     }
-    try {
-      return require( resolve( dirname(module.filename), path ) );
-    } catch(err) {
-      parseError( err );
+    if( !result ) {
+      result = tryRequire( resolve( dirname(module.filename), path ) );
     }
-    if( !~path.indexOf( "/" ) ){
-      try {
-        return require( "iai-"+path )
-      } catch(err) {
-        parseError( err );
-      }
+    if( !result && !~path.indexOf("/") ) {
+      result = tryRequire( "iai-"+path );
     }
-    throw Error( "Cannot load '"+ path +"' because cannot find module" );
+    // parse result
+    if( !result ) {
+      throw Error( "Cannot load '"+ path +"' because cannot find module" )
+    }
+    return result;
   }
 }
 
-var notFound = /cannot find module/i;
-
-function parseError( err ){
-  if( !notFound.test( err.message ) ){
-    //throw err;
-    throw Error( "Error while loading: "+err.message );
+function tryRequire( mod_name ){
+  try {
+    return require( mod_name );
+  } catch(err) {
+    if( err.message != "Cannot find module '"+mod_name+"'" ){
+      throw err;
+      throw Error( "Error while loading: " + err );
+    }
   }
 }
